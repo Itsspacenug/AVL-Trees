@@ -24,7 +24,7 @@ public class AVLNode<E> extends SearchTreeNode<E>
         return rh - lh;
     }
 
-    private void updateHeight() {
+    void updateHeight() {
         int lh = nodeHeight((AVLNode<E>)left);
         int rh = nodeHeight((AVLNode<E>)right);
         height = Math.max(lh, rh) + 1;
