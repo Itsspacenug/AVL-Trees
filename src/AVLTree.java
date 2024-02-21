@@ -1,0 +1,143 @@
+public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
+    
+    public boolean add(E data)
+    {
+        return insert(data);
+    }
+
+    public boolean insert(E data)
+    {
+        // This method should use a recursive helper.  It returns
+    	// the tree that results from inserting data 
+    	// into t. It has a similar structure to add from BST.  It
+    	// starts by asking if tree is empty, and if so it sets the
+    	// a new leaf node as the root. If tree is not empty you can compare
+    	// data to the current node's data and take action based on this comparison.
+    	// When you create a new leaf node you should 
+		// increment the tree's size variable. When you return from a 
+    	// recursive call that updates one of t's children
+    	// (e.g. curr.leftChild = insertHelper(data, curr.left))
+		// you should check the AVL property and possibly 
+    	// call updateHeight(), and then recompute curr's height.
+    	
+    	if(overallRoot == null) {
+    		overallRoot = new AVLNode(data);
+    	}
+        return false;
+    }
+    
+    //recursive helper
+    private boolean help(AVLNode<E> node, E data) {
+    	int compare = ((Comparable<E>) data).compareTo(node.data); //compares the nodes data to the data given
+    	if(node.left == null && node.right == null) { //base case if left and right dont lead to anything 
+    		if(compare > 0) {
+    			node.right = new AVLNode(data); //creates new data for that given node
+    			int bf = node.bf();
+    			if(bf <=-2|| bf >= -2) {
+    				
+    			}else {
+    				return true;
+    			}
+    			
+    		}else {
+    			node.left = new AVLNode(data);
+    			int bf = node.bf();
+    			if(bf <=-2|| bf >= -2) {
+    				
+    			}else {
+    				return true;
+    			}	
+    		}
+    	}
+    	
+    	
+		if(compare == 0) {
+			return false;
+		}
+		else if(compare > 0) {
+			
+		}
+		else if(compare < 0) {
+			
+		}
+		return false;
+		
+		
+    	
+    }
+
+    // TODO: IMPLEMENT THE FOLLOWING METHODS BASED ON THE JAVADOC COMMENTS
+  
+    /**
+     * Perform a single rotation to the right of a tree rooted at the current node.
+     * Consider the following illustrations (called on the node A):
+     *
+     *        A       =>     B
+     *       / \      =>    / \
+     *      B   T3    =>  T1   A
+     *     / \        =>      / \
+     *   T1   T2      =>    T2   T3
+     *
+     * Note that A's original parent (if it exists) will need to become B's new
+     * parent. 
+     *
+     * @return The new root of this subtree (node B).
+     */
+    public AVLNode<E> rotateRight(AVLNode<E> oldRoot) {
+        // TODO: Implement this method.  Return the new root B.
+        // Do not forget to change A's parent (if it exists) to be
+        // aware of B as the new root by returning the new root and setting the
+        // parent's pointer when we call rotateRight(node).
+        return null;
+    }
+
+    /**
+     * Perform a single rotation to the left of a tree rooted at the current node.
+     * Consider the following illustrations (called on the node A):
+     *
+     *      A         =>       B
+     *     / \        =>      / \
+     *   T1   B       =>     A   T3
+     *       / \      =>    / \
+     *     T2   T3    =>  T1   T2
+     *
+     * Note that A's original parent (if it exists) will need to become B's new
+     * parent. 
+     *
+     * @return The new root of this subtree (node B).
+     */
+    public AVLNode<E> rotateLeft(AVLNode<E> OldRoot) {
+        // TODO: Implement this method. Return the new root B. 
+        // Do not forget to change A's parent (if it exists) to be
+        // aware of B as the new root by returning the new root and setting the
+        // parent's pointer when we call rotateRight(node).
+        return null;
+    }
+
+    // WAIT TO WORK ON THIS!!!
+    public boolean remove(E data)
+    {
+        return false;
+    }
+
+    // This will help you with debugging. It prints the keys
+   // on each level of the tree.
+   public void treePrinter() {
+    for (int level = 0; level < ((AVLNode<E>)overallRoot).height(); level++ ) {
+        System.out.printf("Level %d: ", level);
+        printLevel(level, (AVLNode<E>)overallRoot);
+        System.out.println();
+    }
+}
+
+    public void printLevel(int level, AVLNode<E> t) {
+        if (t != null) {
+            if (level == 0)
+                System.out.printf(  "%s ", t.data);
+            else {
+                printLevel(level-1, (AVLNode<E>)t.left);
+                printLevel(level-1, (AVLNode<E>)t.right);
+            }
+        }
+    }
+}
