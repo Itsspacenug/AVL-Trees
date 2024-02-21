@@ -1,4 +1,4 @@
-public class AVLNode<E> extends SearchTreeNode<E>
+public class AVLNode<E extends Comparable<E>> extends SearchTreeNode<E>
 {
     public int height;
 

@@ -21,7 +21,7 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     	// call updateHeight(), and then recompute curr's height.
     	
     	if(overallRoot == null) {
-    		overallRoot = new AVLNode(data);
+    		overallRoot = new AVLNode<E>(data);
     	}return insert((AVLNode<E>) overallRoot, data);
     }
     
