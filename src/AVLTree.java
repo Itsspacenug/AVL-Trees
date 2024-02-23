@@ -22,7 +22,8 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     	
     	if(overallRoot == null) {
     		overallRoot = new AVLNode<E>(data);
-    	}return insert((AVLNode<E>) overallRoot, data);
+    	}else {return insert((AVLNode<E>) overallRoot, data);}
+    	return false;
     }
     
     //recursive helper
@@ -76,8 +77,10 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
         // Do not forget to change A's parent (if it exists) to be
         // aware of B as the new root by returning the new root and setting the
         // parent's pointer when we call rotateRight(node).
-    	
-    	
+    	AVLNode<E> newRoot = new AVLNode<E>(oldRoot.left.data);
+    	if(newRoot.bf() >0) {
+    	if()	
+    	}
         return null;
     }
 
@@ -96,11 +99,18 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
      *
      * @return The new root of this subtree (node B).
      */
-    public AVLNode<E> rotateLeft(AVLNode<E> OldRoot) {
+    public AVLNode<E> rotateLeft(AVLNode<E> oldRoot) {
         // TODO: Implement this method. Return the new root B. 
         // Do not forget to change A's parent (if it exists) to be
         // aware of B as the new root by returning the new root and setting the
         // parent's pointer when we call rotateRight(node).
+    	AVLNode<E> newRoot = new AVLNode<E>(oldRoot.right.data);
+    	if(newRoot.bf() <0) {
+        	AVLNode<E> LNewRoot = new AVLNode<E>(newRoot.left.data);
+        	newRoot.left = LNewRoot.right;
+        	LNewRoot.right = newRoot;
+        	
+        }
         return null;
     }
 

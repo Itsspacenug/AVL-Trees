@@ -12,13 +12,11 @@ public class SearchTreeNode<E extends Comparable<E>> {
 
 		public SearchTreeNode(E data) {
 			this(data,null, null);
-			this.overallRoot = null;
 		}
 		public SearchTreeNode(E data, SearchTreeNode<E> left, SearchTreeNode<E> right) {
 			this.data = data;
 			this.right = right;
 			this.left = left;
-			this.overallRoot =null;
 		}
 		
 		private SearchTreeNode<E> add(SearchTreeNode<E> root, E value) {

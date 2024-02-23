@@ -23,10 +23,13 @@ public class AVLTreeTester {
 
     AVLTree<Integer> avl = new AVLTree<>();
     BinaryTreePrinter<Integer> printer2 = new BinaryTreePrinter<>();
+    //avl.insert(5);
+    //avl.insert(3);
+    //avl.insert(1);
+    //avl.insert(2);
     avl.insert(5);
-    avl.insert(3);
-    avl.insert(1);
-    avl.insert(2);
+    avl.insert(7);
+    avl.insert(6);
     System.out.println("\nAVL tree:");
     System.out.println(avl + "\n");
     printer2.printPreOrder(System.out, avl.overallRoot);
