@@ -25,7 +25,7 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     		return true;
     	}
     	boolean result = insert((AVLNode<E>) overallRoot, data);
-    	((AVLNode<E>) overallRoot).updateHeight();
+    	
     	if(((AVLNode<E>) overallRoot).bf() == -2) {
     		overallRoot = rotateRight((AVLNode<E>) overallRoot);
     	}if(((AVLNode<E>) overallRoot).bf() == 2) { //if the tree is right heavy it rotates it to the left
@@ -44,7 +44,7 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     			}else { //if it DOES lead to a node
     				if(!insert((AVLNode<E>)node.right, data)) return false; //keep traversing down the tree
     				
-    				node.updateHeight(); //changes the height of the tree
+    				((AVLNode<E>)node.right).updateHeight(); //changes the height of the tree
 		
     				if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
     					node = rotateRight((AVLNode<E>) node);
@@ -59,7 +59,7 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     			}else { //if it DOES lead to a node
     				if(!insert((AVLNode<E>) node.left,data)) return false; //keep traversing down the tree
     				
-    				node.updateHeight(); //changes the height of the tree
+    				((AVLNode<E>) node.left).updateHeight(); //changes the height of the tree
     				
     				if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
     					node = rotateRight((AVLNode<E>) node);
@@ -123,16 +123,21 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
         // Do not forget to change A's parent (if it exists) to be
         // aware of B as the new root by returning the new root and setting the
         // parent's pointer when we call rotateRight(node).
-    	AVLNode<E> newRoot = new AVLNode<E>(oldRoot.right.data);
-    	if(newRoot.bf() <0) {
+    	AVLNode<E> newRoot = (AVLNode<E> )oldRoot.right;
+    	
+    	if(newRoot.bf <0) {
         	AVLNode<E> LNewRoot = new AVLNode<E>(newRoot.left.data);
         	newRoot.left = LNewRoot.right;
         	LNewRoot.right = newRoot;
         }else {
         	newRoot.right = oldRoot;
         	oldRoot.right = null;
+        	
+        	oldRoot.right = newRoot.right;
+        	newRoot.left = oldRoot;
+        	oldRoot.updateHeight();
         }
-        return null;
+        return newRoot;
     }
 
     // WAIT TO WORK ON THIS!!!
