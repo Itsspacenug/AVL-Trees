@@ -24,53 +24,38 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     		overallRoot = new AVLNode<E>(data);
     		return true;
     	}
-    	boolean result = insert((AVLNode<E>) overallRoot, data);
-    	
-    	if(((AVLNode<E>) overallRoot).bf() == -2) {
-    		overallRoot = rotateRight((AVLNode<E>) overallRoot);
-    	}if(((AVLNode<E>) overallRoot).bf() == 2) { //if the tree is right heavy it rotates it to the left
-			overallRoot = rotateLeft((AVLNode<E>) overallRoot);
-		}
-    	
-    	return result;
+    	overallRoot = insert((AVLNode<E>) overallRoot, data);
+    	return true;
     }
     
     //recursive helper
-    private boolean insert(AVLNode<E> node, E data) {
+    private AVLNode<E> insert(AVLNode<E> node, E data) {
     	int compare = ((Comparable<E>) data).compareTo(node.data); //compares the nodes data to the data given
     		if(compare > 0) { //Search Tree down the right side
     			if(node.right == null) { //if the right pointer leads to nothing 
-    				node.right = new AVLNode(data); //creates new data for that given right node
+    				node.right = new AVLNode<E>(data); //creates new data for that given right node
     			}else { //if it DOES lead to a node
-    				if(!insert((AVLNode<E>)node.right, data)) return false; //keep traversing down the tree
-    				
-    				((AVLNode<E>)node.right).updateHeight(); //changes the height of the tree
-		
-    				if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
-    					node = rotateRight((AVLNode<E>) node);
-    				}else if(node.bf() == 2) { //if the tree is right heavy it rotates it to the left
-    					node = rotateLeft((AVLNode<E>) node);
-    				}
+    				node.right = insert((AVLNode<E>)node.right, data); //keep traversing down the tree
     			}
     			
     		}else {//Search tree down the left side
     			if(node.left == null) { //if the left pointer leads to nothing 
-    				node.left = new AVLNode(data); //creates new data for that left node
+    				node.left = new AVLNode<E>(data); //creates new data for that left node
     			}else { //if it DOES lead to a node
-    				if(!insert((AVLNode<E>) node.left,data)) return false; //keep traversing down the tree
+    				node.left = insert((AVLNode<E>)node.right, data); //keep traversing down the tree
     				
-    				((AVLNode<E>) node.left).updateHeight(); //changes the height of the tree
-    				
-    				if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
-    					node = rotateRight((AVLNode<E>) node);
-    				}else if(node.bf() == 2) { //if the tree is right heavy it rotates it to the left
-    					node = rotateLeft((AVLNode<E>) node);
-    				}
     			}
     		}
+    		((AVLNode<E>)node).updateHeight(); //changes the height of the tree
+			((AVLNode<E>) node).bf();
+			if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
+				node = rotateRight((AVLNode<E>) node);
+			}else if(node.bf() == 2) { //if the tree is right heavy it rotates it to the left
+				node = rotateLeft((AVLNode<E>) node);
+			}
     	
     	
-		return true;
+		return node;
     	
     }
 
@@ -124,11 +109,14 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
         // aware of B as the new root by returning the new root and setting the
         // parent's pointer when we call rotateRight(node).
     	AVLNode<E> newRoot = (AVLNode<E> )oldRoot.right;
+    	((AVLNode<E>) newRoot).updateHeight();
     	
     	if(newRoot.bf <0) {
-        	AVLNode<E> LNewRoot = new AVLNode<E>(newRoot.left.data);
-        	newRoot.left = LNewRoot.right;
+        	AVLNode<E> LNewRoot = (AVLNode<E>)newRoot.left;
         	LNewRoot.right = newRoot;
+        	LNewRoot.left = oldRoot;
+        	newRoot = LNewRoot;
+        	
         }else {
         	newRoot.right = oldRoot;
         	oldRoot.right = null;

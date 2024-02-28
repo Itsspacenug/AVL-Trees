@@ -1,7 +1,6 @@
 public class AVLNode<E extends Comparable<E>> extends SearchTreeNode<E>
 {
     public int height;
-    public int bf;
 
     public AVLNode(E data)
     {
@@ -22,8 +21,7 @@ public class AVLNode<E extends Comparable<E>> extends SearchTreeNode<E>
     public int bf() {
         int lh = nodeHeight((AVLNode<E>)left);
         int rh = nodeHeight((AVLNode<E>)right);
-        this.bf = rh - lh;
-        return bf;
+        return rh - lh;
     }
 
     void updateHeight() {
