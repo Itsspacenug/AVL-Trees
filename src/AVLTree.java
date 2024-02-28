@@ -43,11 +43,9 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     				node.left = new AVLNode<E>(data); //creates new data for that left node
     			}else { //if it DOES lead to a node
     				node.left = insert((AVLNode<E>)node.right, data); //keep traversing down the tree
-    				
     			}
     		}
     		((AVLNode<E>)node).updateHeight(); //changes the height of the tree
-			((AVLNode<E>) node).bf();
 			if(node.bf() == -2) { //if the tree is left heavy it rotates it to the right
 				node = rotateRight((AVLNode<E>) node);
 			}else if(node.bf() == 2) { //if the tree is right heavy it rotates it to the left
@@ -111,7 +109,7 @@ public class AVLTree <E extends Comparable<E>> extends SearchTree<E>{
     	AVLNode<E> newRoot = (AVLNode<E> )oldRoot.right;
     	((AVLNode<E>) newRoot).updateHeight();
     	
-    	if(newRoot.bf <0) {
+    	if(newRoot.bf() <0) {
         	AVLNode<E> LNewRoot = (AVLNode<E>)newRoot.left;
         	LNewRoot.right = newRoot;
         	LNewRoot.left = oldRoot;
